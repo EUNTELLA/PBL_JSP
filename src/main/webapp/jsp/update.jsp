@@ -21,10 +21,14 @@
     }
 
     UserDAO dao = new UserDAO();
-    boolean isSuccess = dao.update(uid, upass, uname); // UserDAO에 update 메서드가 있어야 합니다.
-    if (isSuccess) {
-        out.print("<script>alert('정보가 성공적으로 수정되었습니다.'); location.href='main.jsp';</script>");
-    } else {
-        out.print("<script>alert('정보 수정에 실패했습니다.'); history.back();</script>");
+    try {
+        boolean isSuccess = dao.update(uid, upass, uname); 
+        if (isSuccess) {
+            out.print("<script>alert('정보가 성공적으로 수정되었습니다.'); location.href='main.jsp';</script>");
+        } else {
+            out.print("<script>alert('정보 수정에 실패했습니다.'); history.back();</script>");
+        }
+    } catch (Exception e) {
+        out.print("<script>alert('정보 수정 중 데이터베이스 오류가 발생했습니다.'); history.back();</script>");
     }
 %>
