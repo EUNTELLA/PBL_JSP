@@ -7,13 +7,13 @@
 	String str = "<table align=center>";
 	str += "<tr height=40><td><b>작성글 리스트</b></td>";
 	str += "<td align=right>";
-	str += "<a href='feedAdd.html'><button>글쓰기</button></a>"; 
+	str += "<a href='../html/feedAdd.html'><button>글쓰기</button></a>"; 
 	str += "</td></tr>";
 
     for (FeedObj feed : feeds) {
         String img = feed.getImages(), imgstr = "";
         if (img != null) {
-            imgstr = "<img src='images/" + img + "' width=240>";
+            imgstr = "<img src='../images/" + img + "' width=240>";
         }
         str += "<tr><td colspan=2><hr></td></tr>";
         str += "<tr>";
