@@ -7,7 +7,13 @@
 <%@ page import="org.apache.commons.fileupload.disk.*" %>
 <%@ page import="org.apache.commons.fileupload.servlet.*" %>
 <%
-String uid = null, ucon = null, ufname = null;
+String uid = (String) session.getAttribute("id");
+if (uid == null) {
+    out.print("<script>alert('로그인이 필요합니다.'); location.href='../html/login.html';</script>");
+    return;
+}
+
+String ucon = null, ufname = null;
 byte[] ufile = null;
 String file = null;
 request.setCharacterEncoding("utf-8");
@@ -20,8 +26,7 @@ while(iter.hasNext()) {
     String name = item.getFieldName();
     if(item.isFormField()) {
         String value = item.getString("utf-8");
-        if (name.equals("id")) uid = value;
-        else if (name.equals("content")) ucon = value;
+        if (name.equals("content")) ucon = value;
     }
     else {
         if (name.equals("image")) {
@@ -38,7 +43,7 @@ while(iter.hasNext()) {
 }
 
 FeedDAO dao = new FeedDAO();
-if (dao.insert(uid, ucon, file)) {
+if (ucon != null && !ucon.trim().equals("") && dao.insert(uid, ucon, file)) {
     response.sendRedirect("main.jsp");
 }
 else {

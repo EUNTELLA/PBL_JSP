@@ -2,6 +2,19 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="dao.*" %>
+<%!
+    private String h(String value) {
+        if (value == null) return "";
+        return value.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\"", "&quot;")
+                    .replace("'", "&#39;");
+    }
+%>
+<%
+    String loginId = (String) session.getAttribute("id");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +38,13 @@
             <a href="logout.jsp">로그아웃</a>
         </div>
         <div class="section">
-            <h2>Workflows</h2>
+            <div class="section-head">
+                <div>
+                    <h2>게시판</h2>
+                    <p>글 작성, 이미지 첨부, 수정, 삭제가 가능한 피드 게시판입니다.</p>
+                </div>
+                <a class="button button-inline" href="../html/feedAdd.html">글쓰기</a>
+            </div>
             <div class="feed-grid">
 <%
     ArrayList<FeedObj> feeds = (new FeedDAO()).getList2();
@@ -36,15 +55,21 @@
             String img = feed.getImages();
             String imgstr = "";
             if (img != null && !img.trim().isEmpty()) {
-                imgstr = "<div class='feed-img'><img src='../images/" + img + "' alt='Image'></div>";
+                imgstr = "<div class='feed-img'><img src='../images/" + h(img) + "' alt='Image'></div>";
             }
             out.print("<div class='feed-card'>");
             out.print("  <div class='feed-header'>");
-            out.print("    <span class='feed-author'>" + feed.getId() + "</span>");
-            out.print("    <span class='feed-time'>" + feed.getTs() + "</span>");
+            out.print("    <span class='feed-author'>" + h(feed.getId()) + "</span>");
+            out.print("    <span class='feed-time'>" + h(feed.getTs()) + "</span>");
             out.print("  </div>");
             out.print(imgstr);
-            out.print("  <div class='feed-content'>" + feed.getContent() + "</div>");
+            out.print("  <div class='feed-content'>" + h(feed.getContent()).replace("\n", "<br>") + "</div>");
+            if (loginId != null && loginId.equals(feed.getId())) {
+                out.print("  <div class='feed-actions'>");
+                out.print("    <a class='text-button' href='feedEdit.jsp?no=" + feed.getNo() + "'>수정</a>");
+                out.print("    <a class='text-button danger' href='feedDelete.jsp?no=" + feed.getNo() + "' onclick=\"return confirm('삭제하시겠습니까?');\">삭제</a>");
+                out.print("  </div>");
+            }
             out.print("</div>");
         }
     }

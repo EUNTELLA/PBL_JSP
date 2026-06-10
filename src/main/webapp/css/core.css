@@ -9,8 +9,8 @@ body {
 
 body {
     margin: 0;
-    background: #f7f7f9;
-    color: #16171a;
+    background: #f8f7fb;
+    color: #202035;
     font-size: 15px;
     font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', Arial, sans-serif;
 }
@@ -28,9 +28,9 @@ a {
     width: 220px;
     height: 76px;
     padding: 26px 28px 18px;
-    background: #fff;
-    color: #16171a;
-    border-right: 1px solid #ececf0;
+    background: #ffffff;
+    color: #202035;
+    border-right: 1px solid #eceaf4;
     font-size: 1.2em;
     font-weight: 800;
     letter-spacing: 0;
@@ -42,7 +42,7 @@ a {
     width: 10px;
     height: 10px;
     margin-right: 8px;
-    background: #111;
+    background: #1d2440;
     border-radius: 3px;
     transform: rotate(15deg);
 }
@@ -55,8 +55,8 @@ a {
     z-index: 20;
     width: 220px;
     padding: 12px 14px;
-    background: #fff;
-    border-right: 1px solid #ececf0;
+    background: #ffffff;
+    border-right: 1px solid #eceaf4;
     overflow-y: auto;
 }
 
@@ -65,7 +65,7 @@ a {
     min-height: 38px;
     margin: 4px 0;
     padding: 10px 14px;
-    color: #34363b;
+    color: #4d5064;
     border-radius: 8px;
     font-size: 0.94em;
     font-weight: 600;
@@ -73,8 +73,8 @@ a {
 
 .menu-bar a:hover,
 .menu-bar a:focus {
-    background: #f0f1f5;
-    color: #111;
+    background: #f1efff;
+    color: #2f3c7e;
 }
 
 .page-body {
@@ -91,11 +91,11 @@ a {
     height: 42px;
     margin-bottom: 26px;
     padding: 12px 18px;
-    color: #9a9da5;
+    color: #a0a1b3;
     background: #fff;
-    border: 1px solid #ececf0;
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(24, 31, 50, 0.04);
+    border: 1px solid #eceaf4;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(48, 54, 93, 0.05);
 }
 
 .section {
@@ -120,9 +120,9 @@ a {
 .feed-card,
 .home-card {
     background: #fff;
-    border: 1px solid #ececf0;
-    border-radius: 8px;
-    box-shadow: 0 14px 36px rgba(24, 31, 50, 0.06);
+    border: 1px solid #eceaf4;
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(48, 54, 93, 0.07);
 }
 
 .section {
@@ -138,14 +138,14 @@ h1,
 h2,
 h3 {
     margin: 0 0 16px;
-    color: #15161a;
+    color: #202035;
     font-weight: 800;
     letter-spacing: 0;
 }
 
 p {
     margin: 0;
-    color: #6f737c;
+    color: #74778d;
     line-height: 1.6;
 }
 
@@ -154,8 +154,8 @@ p {
     width: 100%;
     padding: 0 14px;
     color: #202226;
-    background: #fbfbfc;
-    border: 1px solid #dedfe5;
+    background: #fbfbfe;
+    border: 1px solid #e1dfeb;
     border-radius: 8px;
     font-size: 1em;
     font-family: inherit;
@@ -191,8 +191,8 @@ p {
     min-height: 46px;
     padding: 0 16px;
     color: #fff;
-    background: #15161a;
-    border: 1px solid #15161a;
+    background: #2f3c7e;
+    border: 1px solid #2f3c7e;
     border-radius: 8px;
     text-align: center;
     line-height: 44px;
@@ -208,7 +208,7 @@ p {
 .desc {
     width: 100%;
     margin-bottom: 10px;
-    color: #737782;
+    color: #74778d;
     font-size: 0.95em;
     line-height: 1.6;
 }
@@ -229,9 +229,9 @@ p {
     z-index: 10;
     height: 44px;
     padding: 13px 38px;
-    color: #8d9098;
-    background: rgba(247, 247, 249, 0.92);
-    border-top: 1px solid #ececf0;
+    color: #8f90a2;
+    background: rgba(248, 247, 251, 0.94);
+    border-top: 1px solid #eceaf4;
     font-size: 0.82em;
 }
 
@@ -247,6 +247,21 @@ p {
     overflow: hidden;
 }
 
+.home-card:nth-child(3n+1),
+.feed-card:nth-child(3n+1) {
+    background: linear-gradient(180deg, #ffffff 0%, #f3f0ff 100%);
+}
+
+.home-card:nth-child(3n+2),
+.feed-card:nth-child(3n+2) {
+    background: linear-gradient(180deg, #ffffff 0%, #eef8fd 100%);
+}
+
+.home-card:nth-child(3n),
+.feed-card:nth-child(3n) {
+    background: linear-gradient(180deg, #ffffff 0%, #fff3ea 100%);
+}
+
 .home-card {
     min-height: 138px;
     padding: 22px;
@@ -255,7 +270,7 @@ p {
 .home-card strong {
     display: block;
     margin-bottom: 10px;
-    color: #15161a;
+    color: #202035;
     font-size: 1.05em;
 }
 
@@ -270,7 +285,7 @@ p {
 
 .feed-img {
     height: 150px;
-    background: #e9f3fa;
+    background: linear-gradient(135deg, #dfe8ff, #f6e6dc);
     overflow: hidden;
 }
 
@@ -289,19 +304,62 @@ p {
 .feed-author {
     display: block;
     margin-bottom: 6px;
-    color: #15161a;
+    color: #202035;
     font-weight: 800;
 }
 
 .feed-time {
-    color: #8d9098;
+    color: #8f90a2;
     font-size: 0.82em;
 }
 
 .feed-content {
     color: #393c43;
     line-height: 1.55;
-    border-top: 1px solid #f0f1f5;
+    border-top: 1px solid rgba(225, 223, 235, 0.75);
+}
+
+.section-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.section-head h2 {
+    margin-bottom: 6px;
+}
+
+.button-inline {
+    width: auto !important;
+    min-width: 92px;
+    white-space: nowrap;
+}
+
+.feed-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 16px;
+}
+
+.text-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 12px;
+    color: #2f3c7e;
+    background: #ffffff;
+    border: 1px solid #dddaf0;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.9em;
+}
+
+.text-button.danger {
+    color: #c43d54;
+    border-color: #f0cbd2;
 }
 
 .data-table {
@@ -309,21 +367,21 @@ p {
     border-collapse: collapse;
     overflow: hidden;
     background: #fff;
-    border: 1px solid #ececf0;
-    border-radius: 8px;
-    box-shadow: 0 14px 36px rgba(24, 31, 50, 0.06);
+    border: 1px solid #eceaf4;
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(48, 54, 93, 0.07);
 }
 
 .data-table th,
 .data-table td {
     padding: 14px 16px;
-    border-bottom: 1px solid #f0f1f5;
+    border-bottom: 1px solid #f1eff8;
     text-align: left;
 }
 
 .data-table th {
-    color: #15161a;
-    background: #fbfbfc;
+    color: #202035;
+    background: #fbfbfe;
 }
 
 .hide { display: none; }
@@ -331,7 +389,7 @@ p {
 
 .page-msg {
     padding: 24px;
-    color: #737782;
+    color: #74778d;
 }
 
 @media (max-width: 760px) {
@@ -340,7 +398,7 @@ p {
         width: 100%;
         height: auto;
         border-right: 0;
-        border-bottom: 1px solid #ececf0;
+        border-bottom: 1px solid #eceaf4;
     }
 
     .menu-bar {
@@ -348,8 +406,16 @@ p {
         width: 100%;
         padding: 8px 12px;
         border-right: 0;
-        border-bottom: 1px solid #ececf0;
+        border-bottom: 1px solid #eceaf4;
         white-space: nowrap;
+    }
+
+    .section-head {
+        display: block;
+    }
+
+    .button-inline {
+        margin-top: 14px;
     }
 
     .menu-bar a {
