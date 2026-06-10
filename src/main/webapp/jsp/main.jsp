@@ -55,7 +55,7 @@
             out.print("  <div class='feed-content'>" + feed.getContent() + "</div>");
             out.print("</div>");
         }
-        }
+    }
 %>
     </div>
 </body>
