@@ -308,6 +308,14 @@ p {
     font-weight: 800;
 }
 
+.feed-title {
+    display: block;
+    margin-bottom: 8px;
+    color: #202035;
+    font-size: 1.05em;
+    line-height: 1.35;
+}
+
 .feed-time {
     color: #8f90a2;
     font-size: 0.82em;
@@ -360,6 +368,71 @@ p {
 .text-button.danger {
     color: #c43d54;
     border-color: #f0cbd2;
+}
+
+.danger-button {
+    background: #c43d54 !important;
+    border-color: #c43d54 !important;
+}
+
+.reply-box {
+    padding: 0 16px 16px;
+}
+
+.reply-empty,
+.reply-item {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(225, 223, 235, 0.75);
+    border-radius: 8px;
+}
+
+.reply-empty {
+    color: #8f90a2;
+    font-size: 0.9em;
+}
+
+.reply-item strong {
+    margin-right: 8px;
+    color: #202035;
+    font-size: 0.9em;
+}
+
+.reply-item span,
+.reply-delete {
+    color: #8f90a2;
+    font-size: 0.8em;
+}
+
+.reply-item p {
+    margin-top: 6px;
+    color: #393c43;
+    font-size: 0.92em;
+}
+
+.reply-delete {
+    display: inline-block;
+    margin-top: 6px;
+    color: #c43d54;
+    font-weight: 800;
+}
+
+.reply-form {
+    display: grid;
+    grid-template-columns: 1fr 64px;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.reply-form input[type=text],
+.reply-form input[type=submit] {
+    min-height: 38px;
+}
+
+.reply-form input[type=submit] {
+    padding: 0;
+    line-height: 36px;
 }
 
 .data-table {
