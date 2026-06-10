@@ -1,8 +1,11 @@
 <%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="dao.UserDAO" %>
 <%
-  request.setCharacterEncoding("utf-8");
-  String uid = request.getParameter("id");
+  String uid = (String) session.getAttribute("id");
+  if (uid == null) {
+      out.print("<script>alert('로그인이 필요합니다.'); location.href='../html/login.html';</script>");
+      return;
+  }
 
   UserDAO dao = new UserDAO();
   if (dao.exists(uid) == false) {
@@ -10,7 +13,8 @@
       return;
   }
   if (dao.delete(uid)) {
-      out.print("회원 탈퇴가 완료되었습니다.");
+      session.invalidate();
+      out.print("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='../index.html';</script>");
   }
   else {
       out.print("회원 탈퇴 처리 중 오류가 발생하였습니다.");
