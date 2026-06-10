@@ -418,6 +418,17 @@ p {
     font-size: 0.92em;
 }
 
+.board-author span,
+.board-author small {
+    display: block;
+}
+
+.board-author small {
+    margin-top: 3px;
+    color: #9a9daf;
+    font-size: 0.86em;
+}
+
 .board-title strong {
     display: block;
     color: #202035;
@@ -641,21 +652,31 @@ p {
 }
 
 @media (max-width: 760px) {
+    body {
+        background: #fff;
+        font-size: 13px;
+    }
+
     .page-hdr {
-        position: static;
+        position: sticky;
+        top: 0;
         width: 100%;
-        height: auto;
+        height: 52px;
+        padding: 16px 16px 12px;
         border-right: 0;
         border-bottom: 1px solid #eceaf4;
     }
 
     .menu-bar {
-        position: static;
+        position: sticky;
+        top: 52px;
         width: 100%;
-        padding: 8px 12px;
+        z-index: 19;
+        padding: 7px 10px;
         border-right: 0;
         border-bottom: 1px solid #eceaf4;
         white-space: nowrap;
+        overflow-x: auto;
     }
 
     .section-head {
@@ -668,21 +689,65 @@ p {
 
     .menu-bar a {
         display: inline-block;
-        margin-right: 4px;
+        min-height: 30px;
+        margin-right: 3px;
+        padding: 7px 10px;
+        font-size: 0.88em;
     }
 
     .page-body {
         width: 100%;
         margin-left: 0;
-        padding: 18px 12px 64px;
+        padding: 12px 10px 54px;
     }
 
-    .board-row {
-        grid-template-columns: 44px minmax(0, 1fr);
+    .section {
+        padding: 12px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .section-head {
+        margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+        margin-bottom: 4px;
+        font-size: 1.16em;
+    }
+
+    .section-head p {
+        font-size: 0.9em;
+    }
+
+    .button-inline {
+        width: 100% !important;
+        min-height: 34px;
+        line-height: 32px;
     }
 
     .board-search {
-        grid-template-columns: 1fr 64px;
+        grid-template-columns: 1fr 58px;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .board-search input {
+        min-height: 34px;
+    }
+
+    .board-row {
+        grid-template-columns: 36px minmax(0, 1fr);
+        min-height: auto;
+    }
+
+    .board-row > div {
+        padding: 9px 6px;
+    }
+
+    .board-head {
+        min-height: 34px;
     }
 
     .board-search .text-button {
@@ -694,7 +759,30 @@ p {
     .board-manage {
         grid-column: 2;
         padding-top: 0;
+        padding-bottom: 3px;
         text-align: left;
+    }
+
+    .board-author span,
+    .board-author small,
+    .board-date {
+        display: inline;
+    }
+
+    .board-author small::before,
+    .board-date::before {
+        content: " · ";
+    }
+
+    .board-manage {
+        gap: 4px;
+        justify-content: flex-start;
+    }
+
+    .text-button {
+        min-height: 28px;
+        padding: 0 8px;
+        font-size: 0.82em;
     }
 
     .board-head .board-author,
@@ -707,8 +795,25 @@ p {
         padding-left: 52px;
     }
 
+    .pagination {
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .page-link {
+        min-width: 28px;
+        min-height: 28px;
+        padding: 5px 8px;
+    }
+
+    .view-content {
+        min-height: 90px;
+        padding: 14px 0;
+    }
+
     .page-footer {
         left: 0;
-        padding: 13px 16px;
+        height: 34px;
+        padding: 9px 12px;
     }
 }

@@ -77,7 +77,6 @@
                 </div>
 <%
     FeedDAO feedDao = new FeedDAO();
-    ReplyDAO replyDao = new ReplyDAO();
     int totalCount = feedDao.getCount(keyword);
     int totalPage = (int) Math.ceil(totalCount / (double) pageSize);
     if (totalPage < 1) totalPage = 1;
@@ -87,7 +86,6 @@
         out.print("<div class='board-empty'>등록된 글이 없습니다.</div>");
     } else {
         for (FeedObj feed : feeds) {
-            int replyCount = replyDao.getCount(feed.getNo());
             String detailUrl = "feedView.jsp?no=" + feed.getNo();
             if (!keyword.trim().equals("")) {
                 detailUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8") + "&page=" + pageNo;
@@ -98,9 +96,9 @@
             out.print("  <div class='board-row'>");
             out.print("    <div class='board-no'>" + feed.getNo() + "</div>");
             out.print("    <div class='board-title'><a class='board-title-link' href='" + detailUrl + "'>" + h(feed.getTitle()) + "</a>");
-            if (replyCount > 0) out.print("<span class='reply-count'>[" + replyCount + "]</span>");
+            if (feed.getReplyCount() > 0) out.print("<span class='reply-count'>[" + feed.getReplyCount() + "]</span>");
             out.print("    </div>");
-            out.print("    <div class='board-author'>" + h(feed.getId()) + "</div>");
+            out.print("    <div class='board-author'><span>" + h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) + "</span><small>" + h(feed.getId()) + "</small></div>");
             out.print("    <div class='board-date'>" + h(feed.getTs()) + "</div>");
             out.print("    <div class='board-manage'>");
             if (loginId != null && loginId.equals(feed.getId())) {

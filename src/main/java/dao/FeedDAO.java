@@ -40,16 +40,20 @@ public class FeedDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM feed";
+            String sql = "SELECT f.*, u.name AS author_name, COUNT(r.no) AS reply_count FROM feed f";
+            sql += " LEFT JOIN user u ON f.id = u.id";
+            sql += " LEFT JOIN reply r ON f.no = r.feed_no";
             boolean hasKeyword = keyword != null && !keyword.trim().equals("");
             if (hasKeyword) {
-                sql += " WHERE title LIKE ? OR content LIKE ? OR id LIKE ?";
+                sql += " WHERE f.title LIKE ? OR f.content LIKE ? OR f.id LIKE ? OR u.name LIKE ?";
             }
-            sql += " ORDER BY no DESC LIMIT ? OFFSET ?";
+            sql += " GROUP BY f.no, f.id, f.title, f.content, f.ts, f.images, u.name";
+            sql += " ORDER BY f.no DESC LIMIT ? OFFSET ?";
             stmt = conn.prepareStatement(sql);
             int idx = 1;
             if (hasKeyword) {
                 String q = "%" + keyword.trim() + "%";
+                stmt.setString(idx++, q);
                 stmt.setString(idx++, q);
                 stmt.setString(idx++, q);
                 stmt.setString(idx++, q);
@@ -60,7 +64,7 @@ public class FeedDAO {
 
             ArrayList<FeedObj> feeds = new ArrayList<FeedObj>();
             while(rs.next()) {
-                feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images")));
+                feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"), rs.getString("author_name"), rs.getInt("reply_count")));
             }
             return feeds;
         } finally {
@@ -75,10 +79,10 @@ public class FeedDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT COUNT(*) FROM feed";
+            String sql = "SELECT COUNT(*) FROM feed f LEFT JOIN user u ON f.id = u.id";
             boolean hasKeyword = keyword != null && !keyword.trim().equals("");
             if (hasKeyword) {
-                sql += " WHERE title LIKE ? OR content LIKE ? OR id LIKE ?";
+                sql += " WHERE f.title LIKE ? OR f.content LIKE ? OR f.id LIKE ? OR u.name LIKE ?";
             }
             stmt = conn.prepareStatement(sql);
             if (hasKeyword) {
@@ -86,6 +90,7 @@ public class FeedDAO {
                 stmt.setString(1, q);
                 stmt.setString(2, q);
                 stmt.setString(3, q);
+                stmt.setString(4, q);
             }
             rs = stmt.executeQuery();
             if (!rs.next()) return 0;
