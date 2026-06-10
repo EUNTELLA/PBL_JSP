@@ -9,6 +9,7 @@
 <%
 String uid = null, ucon = null, ufname = null;
 byte[] ufile = null;
+String file = null;
 request.setCharacterEncoding("utf-8");
 
 ServletFileUpload sfu = new ServletFileUpload(new DiskFileItemFactory());
@@ -25,17 +26,17 @@ while(iter.hasNext()) {
     else {
         if (name.equals("image")) {
             ufname = item.getName();
-            Path p = Paths.get(ufname);
-            String file = p.getFileName().toString();
-            ufile = item.get();
-            String root = application.getRealPath(java.io.File.separator);
-            FileUtil.saveImage(root, file, ufile);
+            if (ufname != null && !ufname.trim().equals("")) {
+                Path p = Paths.get(ufname);
+                file = p.getFileName().toString();
+                ufile = item.get();
+                String root = application.getRealPath(java.io.File.separator);
+                FileUtil.saveImage(root, file, ufile);
+            }
         }
     }
 }
 
-Path p = Paths.get(ufname);
-String file = p.getFileName().toString();
 FeedDAO dao = new FeedDAO();
 if (dao.insert(uid, ucon, file)) {
     response.sendRedirect("main.jsp");
