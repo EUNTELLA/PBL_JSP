@@ -15,8 +15,13 @@
         return;
     }
 
+    String feedNo = request.getParameter("feedNo");
     if ((new ReplyDAO()).delete(no, uid)) {
-        response.sendRedirect("main.jsp");
+        if (feedNo != null && !feedNo.trim().equals("")) {
+            response.sendRedirect("feedView.jsp?no=" + feedNo);
+        } else {
+            response.sendRedirect("main.jsp");
+        }
     } else {
         out.print("<script>alert('삭제 권한이 없거나 댓글이 없습니다.'); location.href='main.jsp';</script>");
     }

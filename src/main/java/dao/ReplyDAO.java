@@ -46,6 +46,25 @@ public class ReplyDAO {
         }
     }
 
+    public int getCount(int feedNo) throws NamingException, SQLException {
+        Connection conn = ConnectionPool.get();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT COUNT(*) FROM reply WHERE feed_no = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, feedNo);
+            rs = stmt.executeQuery();
+
+            if (!rs.next()) return 0;
+            return rs.getInt(1);
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
     public boolean delete(int no, String uid) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();
         PreparedStatement stmt = null;

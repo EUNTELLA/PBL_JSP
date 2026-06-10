@@ -14,6 +14,17 @@
 %>
 <%
     String loginId = (String) session.getAttribute("id");
+    request.setCharacterEncoding("utf-8");
+    String keyword = request.getParameter("keyword");
+    if (keyword == null) keyword = "";
+    int pageNo = 1;
+    int pageSize = 10;
+    try {
+        pageNo = Integer.parseInt(request.getParameter("page"));
+        if (pageNo < 1) pageNo = 1;
+    } catch (Exception e) {
+        pageNo = 1;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -43,12 +54,19 @@
             <div class="section-head">
                 <div>
                     <h2>게시판</h2>
-                    <p>글 작성, 이미지 첨부, 댓글, 수정, 삭제가 가능한 게시판입니다.</p>
+                    <p>제목, 내용, 작성자로 검색할 수 있습니다.</p>
                 </div>
 <% if (loginId != null) { %>
                 <a class="button button-inline" href="../html/feedAdd.html">글쓰기</a>
 <% } %>
             </div>
+            <form class="board-search" action="main.jsp" method="get">
+                <input name="keyword" type="text" value="<%= h(keyword) %>" placeholder="검색어 입력">
+                <input type="submit" value="검색">
+                <% if (!keyword.trim().equals("")) { %>
+                <a class="text-button" href="main.jsp">전체</a>
+                <% } %>
+            </form>
             <div class="board-list">
                 <div class="board-row board-head">
                     <div class="board-no">번호</div>
@@ -58,21 +76,30 @@
                     <div class="board-manage">관리</div>
                 </div>
 <%
-    ArrayList<FeedObj> feeds = (new FeedDAO()).getList2();
+    FeedDAO feedDao = new FeedDAO();
+    ReplyDAO replyDao = new ReplyDAO();
+    int totalCount = feedDao.getCount(keyword);
+    int totalPage = (int) Math.ceil(totalCount / (double) pageSize);
+    if (totalPage < 1) totalPage = 1;
+    if (pageNo > totalPage) pageNo = totalPage;
+    ArrayList<FeedObj> feeds = feedDao.getPage(keyword, pageNo, pageSize);
     if (feeds == null || feeds.isEmpty()) {
         out.print("<div class='board-empty'>등록된 글이 없습니다.</div>");
     } else {
-        ReplyDAO replyDao = new ReplyDAO();
         for (FeedObj feed : feeds) {
-            String img = feed.getImages();
-            String imgstr = "";
-            if (img != null && !img.trim().isEmpty()) {
-                imgstr = "<div class='board-image'><img src='../images/" + h(img) + "' alt='Image'></div>";
+            int replyCount = replyDao.getCount(feed.getNo());
+            String detailUrl = "feedView.jsp?no=" + feed.getNo();
+            if (!keyword.trim().equals("")) {
+                detailUrl += "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8") + "&page=" + pageNo;
+            } else {
+                detailUrl += "&page=" + pageNo;
             }
             out.print("<div class='board-item'>");
             out.print("  <div class='board-row'>");
             out.print("    <div class='board-no'>" + feed.getNo() + "</div>");
-            out.print("    <div class='board-title'><strong>" + h(feed.getTitle()) + "</strong><p>" + h(feed.getContent()).replace("\n", "<br>") + "</p>" + imgstr + "</div>");
+            out.print("    <div class='board-title'><a class='board-title-link' href='" + detailUrl + "'>" + h(feed.getTitle()) + "</a>");
+            if (replyCount > 0) out.print("<span class='reply-count'>[" + replyCount + "]</span>");
+            out.print("    </div>");
             out.print("    <div class='board-author'>" + h(feed.getId()) + "</div>");
             out.print("    <div class='board-date'>" + h(feed.getTs()) + "</div>");
             out.print("    <div class='board-manage'>");
@@ -82,31 +109,17 @@
             }
             out.print("    </div>");
             out.print("  </div>");
-            out.print("  <div class='reply-box board-replies'>");
-            ArrayList<ReplyObj> replies = replyDao.getList(feed.getNo());
-            if (replies.isEmpty()) {
-                out.print("    <div class='reply-empty'>댓글이 없습니다.</div>");
-            } else {
-                for (ReplyObj reply : replies) {
-                    out.print("    <div class='reply-item'>");
-                    out.print("      <div><strong>" + h(reply.getId()) + "</strong><span>" + h(reply.getTs()) + "</span></div>");
-                    out.print("      <p>" + h(reply.getContent()).replace("\n", "<br>") + "</p>");
-                    if (loginId != null && loginId.equals(reply.getId())) {
-                        out.print("      <a class='reply-delete' href='replyDelete.jsp?no=" + reply.getNo() + "' onclick=\"return confirm('댓글을 삭제하시겠습니까?');\">삭제</a>");
-                    }
-                    out.print("    </div>");
-                }
-            }
-            if (loginId != null) {
-                out.print("    <form class='reply-form' action='replyAdd.jsp' method='post'>");
-                out.print("      <input type='hidden' name='feedNo' value='" + feed.getNo() + "'>");
-                out.print("      <input name='content' type='text' placeholder='댓글 작성' required>");
-                out.print("      <input type='submit' value='등록'>");
-                out.print("    </form>");
-            }
-            out.print("  </div>");
             out.print("</div>");
         }
+    }
+%>
+            </div>
+            <div class="pagination">
+<%
+    String encodedKeyword = java.net.URLEncoder.encode(keyword, "UTF-8");
+    for (int i = 1; i <= totalPage; i++) {
+        String cls = (i == pageNo) ? "page-link active" : "page-link";
+        out.print("<a class='" + cls + "' href='main.jsp?page=" + i + "&keyword=" + encodedKeyword + "'>" + i + "</a>");
     }
 %>
             </div>

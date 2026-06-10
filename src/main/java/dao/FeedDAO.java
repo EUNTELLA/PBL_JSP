@@ -28,25 +28,74 @@ public class FeedDAO {
 	}
 
 	public ArrayList<FeedObj> getList2() throws NamingException, SQLException {
-	    Connection conn = ConnectionPool.get();
-	    PreparedStatement stmt = null;
-	    ResultSet rs = null;
-	    try {
-	        String sql = "SELECT * FROM feed ORDER BY ts DESC";
-	        stmt = conn.prepareStatement(sql);
-	        rs = stmt.executeQuery();
-
-	        ArrayList<FeedObj> feeds = new ArrayList<FeedObj>();
-	        while(rs.next()) {
-	            feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images")));
-	        }
-	        return feeds;
-	    } finally {
-	        if (rs != null) rs.close();
-	        if (stmt != null) stmt.close(); 
-	        if (conn != null) conn.close();
-	    }
+	    return getPage("", 1, 1000);
 	}
+
+    public ArrayList<FeedObj> search(String keyword) throws NamingException, SQLException {
+        return getPage(keyword, 1, 1000);
+    }
+
+    public ArrayList<FeedObj> getPage(String keyword, int page, int pageSize) throws NamingException, SQLException {
+        Connection conn = ConnectionPool.get();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM feed";
+            boolean hasKeyword = keyword != null && !keyword.trim().equals("");
+            if (hasKeyword) {
+                sql += " WHERE title LIKE ? OR content LIKE ? OR id LIKE ?";
+            }
+            sql += " ORDER BY no DESC LIMIT ? OFFSET ?";
+            stmt = conn.prepareStatement(sql);
+            int idx = 1;
+            if (hasKeyword) {
+                String q = "%" + keyword.trim() + "%";
+                stmt.setString(idx++, q);
+                stmt.setString(idx++, q);
+                stmt.setString(idx++, q);
+            }
+            stmt.setInt(idx++, pageSize);
+            stmt.setInt(idx, (page - 1) * pageSize);
+            rs = stmt.executeQuery();
+
+            ArrayList<FeedObj> feeds = new ArrayList<FeedObj>();
+            while(rs.next()) {
+                feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images")));
+            }
+            return feeds;
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    public int getCount(String keyword) throws NamingException, SQLException {
+        Connection conn = ConnectionPool.get();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT COUNT(*) FROM feed";
+            boolean hasKeyword = keyword != null && !keyword.trim().equals("");
+            if (hasKeyword) {
+                sql += " WHERE title LIKE ? OR content LIKE ? OR id LIKE ?";
+            }
+            stmt = conn.prepareStatement(sql);
+            if (hasKeyword) {
+                String q = "%" + keyword.trim() + "%";
+                stmt.setString(1, q);
+                stmt.setString(2, q);
+                stmt.setString(3, q);
+            }
+            rs = stmt.executeQuery();
+            if (!rs.next()) return 0;
+            return rs.getInt(1);
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
 
     public FeedObj getFeed(int no) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();

@@ -24,7 +24,7 @@
     }
 
     if ((new ReplyDAO()).insert(feedNo, uid, content)) {
-        response.sendRedirect("main.jsp");
+        response.sendRedirect("feedView.jsp?no=" + feedNo);
     } else {
         out.print("<script>alert('댓글 등록 중 오류가 발생했습니다.'); history.back();</script>");
     }
