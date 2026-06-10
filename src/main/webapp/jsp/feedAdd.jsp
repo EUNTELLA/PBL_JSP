@@ -13,7 +13,7 @@ if (uid == null) {
     return;
 }
 
-String ucon = null, ufname = null;
+String title = null, ucon = null, ufname = null;
 byte[] ufile = null;
 String file = null;
 request.setCharacterEncoding("utf-8");
@@ -26,7 +26,8 @@ while(iter.hasNext()) {
     String name = item.getFieldName();
     if(item.isFormField()) {
         String value = item.getString("utf-8");
-        if (name.equals("content")) ucon = value;
+        if (name.equals("title")) title = value;
+        else if (name.equals("content")) ucon = value;
     }
     else {
         if (name.equals("image")) {
@@ -43,7 +44,7 @@ while(iter.hasNext()) {
 }
 
 FeedDAO dao = new FeedDAO();
-if (ucon != null && !ucon.trim().equals("") && dao.insert(uid, ucon, file)) {
+if (title != null && !title.trim().equals("") && ucon != null && !ucon.trim().equals("") && dao.insert(uid, title, ucon, file)) {
     response.sendRedirect("main.jsp");
 }
 else {

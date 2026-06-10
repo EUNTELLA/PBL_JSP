@@ -7,15 +7,16 @@ import javax.naming.NamingException;
 import util.*;
 
 public class FeedDAO {
-	public boolean insert(String uid, String ucon, String uimages) throws NamingException, SQLException {
+	public boolean insert(String uid, String title, String ucon, String uimages) throws NamingException, SQLException {
 	    Connection conn = ConnectionPool.get();
 	    PreparedStatement stmt = null;
 	    try {
-	        String sql = "INSERT INTO feed(id, content, images) VALUES(?, ?, ?)";
+	        String sql = "INSERT INTO feed(id, title, content, images) VALUES(?, ?, ?, ?)";
 	        stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, uid);
-	        stmt.setString(2, ucon);
-	        stmt.setString(3, uimages);
+	        stmt.setString(2, title);
+	        stmt.setString(3, ucon);
+	        stmt.setString(4, uimages);
 
 	        int count = stmt.executeUpdate();
 	        return (count == 1) ? true : false;
@@ -37,7 +38,7 @@ public class FeedDAO {
 
 	        ArrayList<FeedObj> feeds = new ArrayList<FeedObj>();
 	        while(rs.next()) {
-	            feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("content"), rs.getString("ts"), rs.getString("images")));
+	            feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images")));
 	        }
 	        return feeds;
 	    } finally {
@@ -58,7 +59,7 @@ public class FeedDAO {
             rs = stmt.executeQuery();
 
             if (!rs.next()) return null;
-            return new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("content"), rs.getString("ts"), rs.getString("images"));
+            return new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"));
         } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
@@ -66,15 +67,16 @@ public class FeedDAO {
         }
     }
 
-    public boolean update(int no, String uid, String content) throws NamingException, SQLException {
+    public boolean update(int no, String uid, String title, String content) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();
         PreparedStatement stmt = null;
         try {
-            String sql = "UPDATE feed SET content = ? WHERE no = ? AND id = ?";
+            String sql = "UPDATE feed SET title = ?, content = ? WHERE no = ? AND id = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, content);
-            stmt.setInt(2, no);
-            stmt.setString(3, uid);
+            stmt.setString(1, title);
+            stmt.setString(2, content);
+            stmt.setInt(3, no);
+            stmt.setString(4, uid);
 
             int count = stmt.executeUpdate();
             return count == 1;

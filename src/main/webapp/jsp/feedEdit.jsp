@@ -47,16 +47,14 @@
             <a href="../index.html">홈</a>
             <a href="main.jsp">피드</a>
             <a href="../html/feedAdd.html">글쓰기</a>
-            <a href="../html/login.html">로그인</a>
-            <a href="../html/signup.html">회원가입</a>
             <a href="edit.jsp">정보수정</a>
-            <a href="../html/withdraw.html">회원탈퇴</a>
             <a href="userList.jsp">회원목록</a>
             <a href="logout.jsp">로그아웃</a>
         </div>
         <div class="section">
             <h2>글 수정</h2>
             <input type="hidden" name="no" value="<%= feed.getNo() %>">
+            <input name="title" type="text" value="<%= h(feed.getTitle()) %>" placeholder="제목" required>
             <textarea name="content" class="mtop-10" required><%= h(feed.getContent()) %></textarea>
             <input type="submit" class="mtop-30" value="수정하기">
         </div>

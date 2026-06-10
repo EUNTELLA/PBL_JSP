@@ -13,6 +13,7 @@
     String upass = request.getParameter("ps");
     String upass2 = request.getParameter("ps2");
     String uname = request.getParameter("name");
+    String ubio = request.getParameter("bio");
     
     // 비밀번호 확인 검증
     if (upass != null && !upass.equals(upass2)) {
@@ -22,7 +23,7 @@
 
     UserDAO dao = new UserDAO();
     try {
-        boolean isSuccess = dao.update(uid, upass, uname); 
+        boolean isSuccess = dao.update(uid, upass, uname, ubio); 
         if (isSuccess) {
             out.print("<script>alert('정보가 성공적으로 수정되었습니다.'); location.href='main.jsp';</script>");
         } else {

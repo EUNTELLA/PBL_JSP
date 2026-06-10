@@ -6,15 +6,16 @@ import javax.naming.NamingException;
 import util.*;
 
 public class UserDAO {
-    public boolean insert(String uid, String upass, String uname) throws NamingException, SQLException {
+    public boolean insert(String uid, String upass, String uname, String ubio) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();
         PreparedStatement stmt = null;
         try {
-            String sql = "INSERT INTO user(id, password, name) VALUES(?, ?, ?)";
+            String sql = "INSERT INTO user(id, password, name, bio) VALUES(?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, uid);
             stmt.setString(2, upass);
             stmt.setString(3, uname);
+            stmt.setString(4, ubio);
 
             int count = stmt.executeUpdate();
             return (count == 1) ? true : false;
@@ -27,15 +28,16 @@ public class UserDAO {
         }
     }
 
-    public boolean update(String uid, String upass, String uname) throws NamingException, SQLException {
+    public boolean update(String uid, String upass, String uname, String ubio) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();
         PreparedStatement stmt = null;
         try {
-            String sql = "UPDATE user SET password = ?, name = ? WHERE id = ?";
+            String sql = "UPDATE user SET password = ?, name = ?, bio = ? WHERE id = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, upass);
             stmt.setString(2, uname);
-            stmt.setString(3, uid);
+            stmt.setString(3, ubio);
+            stmt.setString(4, uid);
 
             int count = stmt.executeUpdate();
             return (count == 1) ? true : false;
@@ -128,7 +130,7 @@ public class UserDAO {
 
             ArrayList<UserObj> users = new ArrayList<UserObj>();
             while (rs.next()) {
-                users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("ts")));
+                users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("bio"), rs.getString("ts")));
             }
             return users;
         } finally {

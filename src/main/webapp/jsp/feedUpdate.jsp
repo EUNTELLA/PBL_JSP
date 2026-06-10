@@ -17,13 +17,14 @@
         return;
     }
 
+    String title = request.getParameter("title");
     String content = request.getParameter("content");
-    if (content == null || content.trim().equals("")) {
-        out.print("<script>alert('내용을 입력해주세요.'); history.back();</script>");
+    if (title == null || title.trim().equals("") || content == null || content.trim().equals("")) {
+        out.print("<script>alert('제목과 내용을 입력해주세요.'); history.back();</script>");
         return;
     }
 
-    if ((new FeedDAO()).update(no, uid, content)) {
+    if ((new FeedDAO()).update(no, uid, title, content)) {
         response.sendRedirect("main.jsp");
     } else {
         out.print("<script>alert('수정 권한이 없거나 게시글이 없습니다.'); location.href='main.jsp';</script>");
