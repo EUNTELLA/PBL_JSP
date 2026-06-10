@@ -51,6 +51,24 @@ body {
     width: 100%;
     padding-top: 54px;
 }
+.menu-bar {
+    float: left;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f6f6f6;
+    text-align: center;
+}
+.menu-bar a {
+    display: inline-block;
+    margin: 4px;
+    padding: 8px 10px;
+    color: #D44010;
+    border: 1px solid #D44010;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+}
 .page-body input {
     float: left;
     width: 100%;
