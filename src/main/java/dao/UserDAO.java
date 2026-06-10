@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import javax.naming.NamingException;
 import util.*;
 
@@ -96,7 +97,7 @@ public class UserDAO {
 
     public ArrayList<UserObj> getList() throws NamingException, SQLException {
         Connection conn = null;
-        preparedStatement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             String sql = "SELECT * FROM user ORDER BY ts DESC";
@@ -104,7 +105,7 @@ public class UserDAO {
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
-            ArrayList<UserObj> list = new ArrayList<Userobj>();
+            ArrayList<UserObj> users = new ArrayList<UserObj>();
             while (rs.next()) {
                 users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("ts")));
             }
@@ -121,3 +122,4 @@ public class UserDAO {
     }
 
 }
+
