@@ -21,10 +21,11 @@
     str += "<a href='userList.jsp'>회원목록</a>";
     str += "<a href='logout.jsp'>로그아웃</a>";
     str += "</div>";
-    str += "<table align=center border=0>";
-    str += "<tr><th colspan=3>가입자 리스트</th></tr>";
+    str += "<div class='section'>";
+    str += "<h2>회원목록</h2>";
+    str += "<table class='data-table'>";
+    str += "<tr><th>아이디</th><th>이름</th><th>가입일</th></tr>";
     while(rs.next()) {
-        str += "<tr><td colspan=3><hr></td></tr>";
         str += "<tr>";
         str += "<td>" + rs.getString("id") + "</td>";
         str += "<td>" + rs.getString("name") + "</td>";
@@ -32,6 +33,7 @@
         str += "</tr>";
     }
     str += "</table>";
+    str += "</div>";
     str += "</div>";
     out.print(str);
     rs.close(); stmt.close(); conn.close();

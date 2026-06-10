@@ -15,7 +15,7 @@
     str += "<a href='userList.jsp'>회원목록</a>";
     str += "<a href='logout.jsp'>로그아웃</a>";
     str += "</div>";
-    str += "<div class='section pad-24 mtop-30'>로그아웃 하였습니다.</div>";
+    str += "<div class='section'><h2>로그아웃</h2><p>로그아웃 하였습니다.</p></div>";
     str += "</div>";
    	out.print(str);
 %>

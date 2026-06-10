@@ -14,28 +14,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" href="../css/core.css">
 <title>MySNS - 정보 수정</title>
-<style>
-body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background-color: #fafafa; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-form { background: white; border: 1px solid #dbdbdb; border-radius: 8px; width: 100%; max-width: 380px; padding: 40px 30px; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin: 20px; }
-.page-hdr { font-size: 2.2em; font-weight: bold; text-align: center; margin-bottom: 20px; color: #262626; font-family: 'Brush Script MT', cursive, sans-serif; font-style: italic; }
-.desc {
-    float: left;
-    width: 100%;
-    color: #888;
-    font-size: 0.9em;
-    color: #8e8e8e;
-    font-size: 0.95em;
-    text-align: center;
-    margin-bottom: 25px;
-    line-height: 1.5;
-}
-.desc b { color: #262626; }
-input[type="text"], input[type="password"] { width: 100%; padding: 14px 12px; margin-bottom: 12px; border: 1px solid #dbdbdb; border-radius: 4px; box-sizing: border-box; background-color: #fafafa; font-size: 0.9em; }
-input[type="text"]:focus, input[type="password"]:focus { outline: none; border-color: #a8a8a8; }
-input[type="submit"] { width: 100%; padding: 12px; background-color: #0095f6; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.95em; transition: background 0.2s; margin-top: 10px; }
-input[type="submit"]:hover { background-color: #007bb5; }
-.page-footer { text-align: center; color: #8e8e8e; font-size: 0.8em; margin-top: 25px; }
-</style>
 </head>
 <body>
 <form action="update.jsp" method="post">
@@ -53,6 +31,7 @@ input[type="submit"]:hover { background-color: #007bb5; }
             <a href="logout.jsp">로그아웃</a>
         </div>
         <div class="section">
+            <h2>정보수정</h2>
             <div class="desc">
                 <b><%= uid %></b>님의 정보를 수정합니다.<br>
                 변경할 패스워드와 이름을 입력해주세요.
