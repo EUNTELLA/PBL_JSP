@@ -11,15 +11,15 @@ MySNS 주요 화면 구성입니다.
 
 | 홈 | 로그인 | 회원가입 |
 |----|--------|----------|
-| ![홈 화면](src/main/image/home.png) | ![로그인 화면](src/main/image/login.png) | ![회원가입 화면](src/main/image/signup.png) |
+| ![홈 화면](src/main/webapp/images/indexjsp.png) | ![로그인 화면](src/main/webapp/images/loginjsp.png) | ![회원가입 화면](src/main/webapp/images/signupjsp.png) |
 
 | 피드 목록 | 게시글 상세 | 글쓰기 |
 |-----------|-------------|--------|
-| ![피드 목록 화면](src/main/image/feed.png) | ![게시글 화면](src/main/imgae/mainjsp.png) | ![글쓰기 화면](src/main/image/feedadd.png) |
+| ![피드 목록 화면](src/main/webapp/images/mainjsp.png) | ![게시글 상세 화면](src/main/webapp/images/feedViewjsp.png) | ![글쓰기 화면](src/main/webapp/images/feedAddjsp.png) |
 
-| 정보수정 | 회원목록 |
-|----------|----------|
-| ![정보수정 화면](src/main/image/edit.png) | ![회원목록 화면](src/main/image/userListjsp.png) |
+| 정보수정 | 회원목록 | 로그아웃 |
+|----------|----------|----------|
+| ![정보수정 화면](src/main/webapp/images/editjsp.png) | ![회원목록 화면](src/main/webapp/images/userListjsp.png) | ![로그아웃 화면](src/main/webapp/images/logout.png) |
 
 
 ## 팀소개
