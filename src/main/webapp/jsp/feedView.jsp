@@ -67,17 +67,27 @@
         <div class="section">
             <div class="view-head">
                 <h2><%= h(feed.getTitle()) %></h2>
-                <div class="view-meta">
-                    <span class="author-chip">
-                    <% if (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) { %>
+                <div class="view-summary">
+                    <div class="view-author-line">
+                        <% if (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) { %>
                         <img class="avatar avatar-small" src="../images/<%= h(feed.getAuthorProfileImage()) %>" alt="프로필 이미지">
-                    <% } else { %>
+                        <% } else { %>
                         <span class="avatar avatar-small avatar-empty"><%= h(feed.getId().substring(0, 1)) %></span>
+                        <% } %>
+                        <div>
+                            <div class="view-author-meta">
+                                <b><%= h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) %></b>
+                                <span>|</span>
+                                <span><%= h(feed.getTs()) %></span>
+                            </div>
+                            <div class="view-count-line">댓글수 : <%= replies.size() %></div>
+                        </div>
+                    </div>
+                    <% if (loginId != null) { %>
+                    <a class="detail-like <%= liked ? "active" : "" %>" href="<%= likeUrl %>" title="<%= liked ? "좋아요 취소" : "좋아요" %>">♡ <span><%= feed.getLikeCount() %></span></a>
+                    <% } else { %>
+                    <span class="detail-like">♡ <span><%= feed.getLikeCount() %></span></span>
                     <% } %>
-                    작성자 <b><%= h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) %></b>
-                    </span>
-                    <span>작성일 <%= h(feed.getTs()) %></span>
-                    <span>👍 <%= feed.getLikeCount() %></span>
                 </div>
             </div>
             <% if (feed.getImages() != null && !feed.getImages().trim().equals("")) { %>
@@ -88,9 +98,6 @@
             <div class="view-content"><%= h(feed.getContent()).replace("\n", "<br>") %></div>
             <div class="view-actions">
                 <a class="text-button" href="<%= listUrl %>">목록</a>
-                <% if (loginId != null) { %>
-                <a class="icon-action <%= liked ? "active" : "" %>" href="<%= likeUrl %>" title="<%= liked ? "좋아요 취소" : "좋아요" %>">👍 <span><%= feed.getLikeCount() %></span></a>
-                <% } %>
                 <% if (loginId != null && loginId.equals(feed.getId())) { %>
                 <a class="text-button" href="feedEdit.jsp?no=<%= feed.getNo() %>">수정</a>
                 <a class="text-button danger" href="feedDelete.jsp?no=<%= feed.getNo() %>" onclick="return confirm('삭제하시겠습니까?');">삭제</a>

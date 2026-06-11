@@ -545,6 +545,63 @@ p {
     margin-bottom: 10px;
 }
 
+.view-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.view-author-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.view-author-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: #74778d;
+    font-size: 0.9em;
+}
+
+.view-author-meta b {
+    color: #202035;
+}
+
+.view-count-line {
+    margin-top: 7px;
+    color: #74778d;
+    font-size: 0.86em;
+    font-weight: 800;
+}
+
+.detail-like {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex: 0 0 auto;
+    color: #e43258;
+    background: transparent;
+    border: 0;
+    font-size: 2.4em;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.detail-like span {
+    color: #74778d;
+    font-size: 0.36em;
+    font-weight: 800;
+}
+
+.detail-like.active {
+    color: #d92f50;
+}
+
 .view-meta {
     display: flex;
     flex-wrap: wrap;
@@ -813,6 +870,80 @@ p {
     color: #2f3c7e;
 }
 
+.view-meta .icon-action {
+    margin-right: 0;
+    font-size: 1em;
+}
+
+.insta-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.insta-card-actions .btn-action {
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    color: #202035 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: 1.08em !important;
+    line-height: 1 !important;
+    font-weight: 800;
+}
+
+.insta-card-actions .btn-action .count {
+    margin-left: 4px;
+    color: #74778d;
+    font-size: 0.84em;
+}
+
+.reaction-wrapper,
+.reaction-wrapper .btn-action {
+    display: inline-flex;
+    align-items: center;
+}
+
+.reaction-popup {
+    display: none !important;
+}
+
+.btn-follow {
+    width: 28px !important;
+    min-width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+    color: #2f3c7e !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    cursor: pointer;
+}
+
+.btn-follow::before {
+    content: "+";
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 900;
+}
+
+.btn-follow.following {
+    color: #c43d54 !important;
+}
+
+.btn-follow.following::before {
+    content: "×";
+}
+
 .hide { display: none; }
 .show { display: block; }
 
@@ -1052,6 +1183,14 @@ p {
     .view-content {
         min-height: 90px;
         padding: 14px 0;
+    }
+
+    .view-summary {
+        align-items: flex-start;
+    }
+
+    .detail-like {
+        font-size: 2em;
     }
 
     .page-footer {
