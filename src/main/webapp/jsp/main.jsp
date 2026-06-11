@@ -38,7 +38,7 @@
     <div class="page-hdr">MySNS</div>
     <div class="page-body">
         <div class="menu-bar">
-            <a href="../index.html">홈</a>
+            <a href="../index.jsp">홈</a>
             <a href="main.jsp">피드</a>
 <% if (loginId == null) { %>
             <a href="../html/login.html">로그인</a>
@@ -85,6 +85,7 @@
     if (feeds == null || feeds.isEmpty()) {
         out.print("<div class='board-empty'>등록된 글이 없습니다.</div>");
     } else {
+        LikeDAO likeDao = new LikeDAO();
         for (FeedObj feed : feeds) {
             String detailUrl = "feedView.jsp?no=" + feed.getNo();
             if (!keyword.trim().equals("")) {
@@ -92,13 +93,25 @@
             } else {
                 detailUrl += "&page=" + pageNo;
             }
+            String currentUrl = "main.jsp?page=" + pageNo + "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
+            String likeUrl = "likeToggle.jsp?no=" + feed.getNo() + "&redirect=" + java.net.URLEncoder.encode(currentUrl, "UTF-8");
+            boolean liked = likeDao.isLiked(feed.getNo(), loginId);
             out.print("<div class='board-item'>");
             out.print("  <div class='board-row'>");
             out.print("    <div class='board-no'>" + feed.getNo() + "</div>");
             out.print("    <div class='board-title'><a class='board-title-link' href='" + detailUrl + "'>" + h(feed.getTitle()) + "</a>");
             if (feed.getReplyCount() > 0) out.print("<span class='reply-count'>[" + feed.getReplyCount() + "]</span>");
+            out.print("<div class='feed-social'>추천 " + feed.getLikeCount());
+            if (loginId != null) out.print(" <a class='social-link' href='" + likeUrl + "'>" + (liked ? "추천 취소" : "추천") + "</a>");
+            out.print("</div>");
             out.print("    </div>");
-            out.print("    <div class='board-author'><span>" + h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) + "</span><small>" + h(feed.getId()) + "</small></div>");
+            out.print("    <div class='board-author'>");
+            if (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) {
+                out.print("<img class='avatar avatar-small' src='../images/" + h(feed.getAuthorProfileImage()) + "' alt='프로필 이미지'>");
+            } else {
+                out.print("<span class='avatar avatar-small avatar-empty'>" + h((feed.getAuthorName() == null || feed.getAuthorName().equals("") ? feed.getId() : feed.getAuthorName()).substring(0, 1)) + "</span>");
+            }
+            out.print("<span>" + h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) + "</span><small>" + h(feed.getId()) + "</small></div>");
             out.print("    <div class='board-date'>" + h(feed.getTs()) + "</div>");
             out.print("    <div class='board-manage'>");
             if (loginId != null && loginId.equals(feed.getId())) {

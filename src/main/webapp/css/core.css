@@ -418,6 +418,13 @@ p {
     font-size: 0.92em;
 }
 
+.board-author {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 7px;
+}
+
 .board-author span,
 .board-author small {
     display: block;
@@ -450,6 +457,19 @@ p {
     margin-left: 6px;
     color: #c43d54;
     font-size: 0.88em;
+    font-weight: 800;
+}
+
+.feed-social {
+    margin-top: 7px;
+    color: #74778d;
+    font-size: 0.86em;
+    font-weight: 700;
+}
+
+.social-link {
+    margin-left: 8px;
+    color: #2f3c7e;
     font-weight: 800;
 }
 
@@ -528,9 +548,16 @@ p {
 .view-meta {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
     color: #74778d;
     font-size: 0.9em;
+}
+
+.author-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 }
 
 .view-image {
@@ -641,6 +668,38 @@ p {
 .data-table th {
     color: #202035;
     background: #fbfbfe;
+}
+
+.avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    color: #fff;
+    background: #2f3c7e;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+.avatar-small {
+    width: 30px;
+    height: 30px;
+    font-size: 0.82em;
+}
+
+.avatar-empty {
+    border: 1px solid #dddaf0;
+}
+
+.file-label,
+.muted-text {
+    display: block;
+    color: #74778d;
+    font-size: 0.9em;
+    font-weight: 800;
 }
 
 .hide { display: none; }
@@ -836,7 +895,7 @@ p {
 
     .data-table td {
         display: grid;
-        grid-template-columns: 68px minmax(0, 1fr);
+        grid-template-columns: 74px minmax(0, 1fr);
         gap: 10px;
         padding: 7px 0;
         border-bottom: 1px solid #f1eff8;

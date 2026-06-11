@@ -35,6 +35,10 @@
 
     String listUrl = "main.jsp?page=" + pageNo + "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
     ArrayList<ReplyObj> replies = (new ReplyDAO()).getList(no);
+    LikeDAO likeDao = new LikeDAO();
+    boolean liked = likeDao.isLiked(feed.getNo(), loginId);
+    String currentUrl = "feedView.jsp?no=" + feed.getNo() + "&page=" + pageNo + "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
+    String likeUrl = "likeToggle.jsp?no=" + feed.getNo() + "&redirect=" + java.net.URLEncoder.encode(currentUrl, "UTF-8");
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +52,7 @@
     <div class="page-hdr">MySNS</div>
     <div class="page-body">
         <div class="menu-bar">
-            <a href="../index.html">홈</a>
+            <a href="../index.jsp">홈</a>
             <a href="main.jsp">피드</a>
 <% if (loginId == null) { %>
             <a href="../html/login.html">로그인</a>
@@ -64,8 +68,16 @@
             <div class="view-head">
                 <h2><%= h(feed.getTitle()) %></h2>
                 <div class="view-meta">
-                    <span>작성자 <b><%= h(feed.getId()) %></b></span>
+                    <span class="author-chip">
+                    <% if (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) { %>
+                        <img class="avatar avatar-small" src="../images/<%= h(feed.getAuthorProfileImage()) %>" alt="프로필 이미지">
+                    <% } else { %>
+                        <span class="avatar avatar-small avatar-empty"><%= h(feed.getId().substring(0, 1)) %></span>
+                    <% } %>
+                    작성자 <b><%= h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) %></b>
+                    </span>
                     <span>작성일 <%= h(feed.getTs()) %></span>
+                    <span>추천 <%= feed.getLikeCount() %></span>
                 </div>
             </div>
             <% if (feed.getImages() != null && !feed.getImages().trim().equals("")) { %>
@@ -76,6 +88,9 @@
             <div class="view-content"><%= h(feed.getContent()).replace("\n", "<br>") %></div>
             <div class="view-actions">
                 <a class="text-button" href="<%= listUrl %>">목록</a>
+                <% if (loginId != null) { %>
+                <a class="text-button" href="<%= likeUrl %>"><%= liked ? "추천 취소" : "추천" %></a>
+                <% } %>
                 <% if (loginId != null && loginId.equals(feed.getId())) { %>
                 <a class="text-button" href="feedEdit.jsp?no=<%= feed.getNo() %>">수정</a>
                 <a class="text-button danger" href="feedDelete.jsp?no=<%= feed.getNo() %>" onclick="return confirm('삭제하시겠습니까?');">삭제</a>

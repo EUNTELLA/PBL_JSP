@@ -14,4 +14,11 @@ public class FileUtil {
         out.write(data);
         out.close();
     }
+
+    public static String safeFileName(String uid, String fname) {
+        if (fname == null || fname.trim().equals("")) return null;
+        String cleanUid = uid.replaceAll("[^a-zA-Z0-9]", "_");
+        String cleanName = new File(fname).getName().replaceAll("[^a-zA-Z0-9._-]", "_");
+        return cleanUid + "_" + System.currentTimeMillis() + "_" + cleanName;
+    }
 }

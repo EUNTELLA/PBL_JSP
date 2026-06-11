@@ -16,11 +16,11 @@
 <title>MySNS - 정보 수정</title>
 </head>
 <body>
-<form action="update.jsp" method="post">
+<form action="update.jsp" method="post" enctype="multipart/form-data">
     <div class="page-hdr">MySNS</div>
     <div class="page-body">
         <div class="menu-bar">
-            <a href="../index.html">홈</a>
+            <a href="../index.jsp">홈</a>
             <a href="main.jsp">피드</a>
             <a href="../html/feedAdd.html">글쓰기</a>
             <a href="edit.jsp">정보수정</a>
@@ -37,6 +37,8 @@
             <input name="ps2" type="password" placeholder="새 패스워드 (확인)" required>
             <input name="name" type="text" placeholder="새 이름">
             <textarea name="bio" class="mtop-10" placeholder="새 소개"></textarea>
+            <label class="file-label mtop-10">프로필 이미지</label>
+            <input name="profileImage" type="file" accept="image/*">
             <input type="submit" value="정보 수정하기"> 
         </div>
         <div class="section mtop-30">

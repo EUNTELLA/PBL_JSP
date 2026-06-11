@@ -29,15 +29,28 @@ public class UserDAO {
     }
 
     public boolean update(String uid, String upass, String uname, String ubio) throws NamingException, SQLException {
+        return update(uid, upass, uname, ubio, null);
+    }
+
+    public boolean update(String uid, String upass, String uname, String ubio, String profileImage) throws NamingException, SQLException {
         Connection conn = ConnectionPool.get();
         PreparedStatement stmt = null;
         try {
-            String sql = "UPDATE user SET password = ?, name = ?, bio = ? WHERE id = ?";
+            String sql = "UPDATE user SET password = ?, name = ?, bio = ?";
+            if (profileImage != null && !profileImage.trim().equals("")) {
+                sql += ", profile_image = ?";
+            }
+            sql += " WHERE id = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, upass);
             stmt.setString(2, uname);
             stmt.setString(3, ubio);
-            stmt.setString(4, uid);
+            if (profileImage != null && !profileImage.trim().equals("")) {
+                stmt.setString(4, profileImage);
+                stmt.setString(5, uid);
+            } else {
+                stmt.setString(4, uid);
+            }
 
             int count = stmt.executeUpdate();
             return (count == 1) ? true : false;
@@ -130,7 +143,7 @@ public class UserDAO {
 
             ArrayList<UserObj> users = new ArrayList<UserObj>();
             while (rs.next()) {
-                users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("bio"), rs.getString("ts")));
+                users.add(new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("bio"), rs.getString("ts"), rs.getString("profile_image")));
             }
             return users;
         } finally {
@@ -142,6 +155,28 @@ public class UserDAO {
                 conn.close();
         }
 
+    }
+
+    public UserObj getUser(String uid) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM user WHERE id = ?";
+            conn = ConnectionPool.get();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, uid);
+            rs = stmt.executeQuery();
+            if (!rs.next()) return null;
+            return new UserObj(rs.getString("id"), rs.getString("name"), rs.getString("bio"), rs.getString("ts"), rs.getString("profile_image"));
+        } finally {
+            if (rs != null)
+                rs.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
+        }
     }
 
 }

@@ -10,7 +10,7 @@
     str += "<div class='page-hdr'>MySNS</div>";
     str += "<div class='page-body'>";
     str += "<div class='menu-bar'>";
-    str += "<a href='../index.html'>홈</a>";
+    str += "<a href='../index.jsp'>홈</a>";
     str += "<a href='main.jsp'>피드</a>";
     str += "<a href='../html/login.html'>로그인</a>";
     str += "<a href='../html/signup.html'>회원가입</a>";

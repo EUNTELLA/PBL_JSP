@@ -40,14 +40,16 @@ public class FeedDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT f.*, u.name AS author_name, COUNT(r.no) AS reply_count FROM feed f";
+            String sql = "SELECT f.*, u.name AS author_name, u.profile_image AS author_profile_image,";
+            sql += " COUNT(DISTINCT r.no) AS reply_count, COUNT(DISTINCT l.id) AS like_count FROM feed f";
             sql += " LEFT JOIN user u ON f.id = u.id";
             sql += " LEFT JOIN reply r ON f.no = r.feed_no";
+            sql += " LEFT JOIN feed_like l ON f.no = l.feed_no";
             boolean hasKeyword = keyword != null && !keyword.trim().equals("");
             if (hasKeyword) {
                 sql += " WHERE f.title LIKE ? OR f.content LIKE ? OR f.id LIKE ? OR u.name LIKE ?";
             }
-            sql += " GROUP BY f.no, f.id, f.title, f.content, f.ts, f.images, u.name";
+            sql += " GROUP BY f.no, f.id, f.title, f.content, f.ts, f.images, u.name, u.profile_image";
             sql += " ORDER BY f.no DESC LIMIT ? OFFSET ?";
             stmt = conn.prepareStatement(sql);
             int idx = 1;
@@ -64,7 +66,7 @@ public class FeedDAO {
 
             ArrayList<FeedObj> feeds = new ArrayList<FeedObj>();
             while(rs.next()) {
-                feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"), rs.getString("author_name"), rs.getInt("reply_count")));
+                feeds.add(new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"), rs.getString("author_name"), rs.getInt("reply_count"), rs.getInt("like_count"), rs.getString("author_profile_image")));
             }
             return feeds;
         } finally {
@@ -107,13 +109,19 @@ public class FeedDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM feed WHERE no = ?";
+            String sql = "SELECT f.*, u.name AS author_name, u.profile_image AS author_profile_image,";
+            sql += " COUNT(DISTINCT r.no) AS reply_count, COUNT(DISTINCT l.id) AS like_count FROM feed f";
+            sql += " LEFT JOIN user u ON f.id = u.id";
+            sql += " LEFT JOIN reply r ON f.no = r.feed_no";
+            sql += " LEFT JOIN feed_like l ON f.no = l.feed_no";
+            sql += " WHERE f.no = ?";
+            sql += " GROUP BY f.no, f.id, f.title, f.content, f.ts, f.images, u.name, u.profile_image";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, no);
             rs = stmt.executeQuery();
 
             if (!rs.next()) return null;
-            return new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"));
+            return new FeedObj(rs.getInt("no"), rs.getString("id"), rs.getString("title"), rs.getString("content"), rs.getString("ts"), rs.getString("images"), rs.getString("author_name"), rs.getInt("reply_count"), rs.getInt("like_count"), rs.getString("author_profile_image"));
         } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();

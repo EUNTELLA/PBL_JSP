@@ -1,8 +1,16 @@
 USE mysns;
 
-INSERT INTO user(id, password, name, bio) VALUES("kim@abc.com", "111", "김시민", "자동화 업무를 정리합니다.");
-INSERT INTO user(id, password, name, bio) VALUES("lee@abc.com", "111", "이순신", "프로젝트 진행 상황을 공유합니다.");
-INSERT INTO user(id, password, name, bio) VALUES("kwon@abc.com", "111", "권율", "아이디어와 기록을 남깁니다.");
+INSERT INTO user(id, password, name, bio, profile_image)
+VALUES("kim@abc.com", "111", "김시민", "자동화 업무를 정리합니다.", "profile-kim.svg")
+ON DUPLICATE KEY UPDATE name = VALUES(name), bio = VALUES(bio), profile_image = VALUES(profile_image);
+
+INSERT INTO user(id, password, name, bio, profile_image)
+VALUES("lee@abc.com", "111", "이순신", "프로젝트 진행 상황을 공유합니다.", "profile-lee.svg")
+ON DUPLICATE KEY UPDATE name = VALUES(name), bio = VALUES(bio), profile_image = VALUES(profile_image);
+
+INSERT INTO user(id, password, name, bio, profile_image)
+VALUES("kwon@abc.com", "111", "권율", "아이디어와 기록을 남깁니다.", "profile-kwon.svg")
+ON DUPLICATE KEY UPDATE name = VALUES(name), bio = VALUES(bio), profile_image = VALUES(profile_image);
 
 INSERT INTO feed(id, title, content) VALUES("kim@abc.com", "첫 게시글", "Hello");
 INSERT INTO feed(id, title, content) VALUES("kwon@abc.com", "업무 기록", "Aloha");

@@ -14,7 +14,7 @@
   }
   if (dao.delete(uid)) {
       session.invalidate();
-      out.print("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='../index.html';</script>");
+      out.print("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='../index.jsp';</script>");
   }
   else {
       out.print("회원 탈퇴 처리 중 오류가 발생하였습니다.");
