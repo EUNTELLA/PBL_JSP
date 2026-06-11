@@ -26,14 +26,14 @@
     str += "</div>";
     str += "<div class='section'>";
     str += "<h2>회원목록</h2>";
-    str += "<table class='data-table'>";
+    str += "<table class='data-table member-table'>";
     str += "<tr><th>아이디</th><th>이름</th><th>소개</th><th>가입일</th></tr>";
     while(rs.next()) {
         str += "<tr>";
-        str += "<td>" + rs.getString("id") + "</td>";
-        str += "<td>" + rs.getString("name") + "</td>";
-        str += "<td>" + rs.getString("bio") + "</td>";
-        str += "<td>" + rs.getString("ts") + "</td>";
+        str += "<td data-label='아이디'>" + rs.getString("id") + "</td>";
+        str += "<td data-label='이름'>" + rs.getString("name") + "</td>";
+        str += "<td data-label='소개'>" + rs.getString("bio") + "</td>";
+        str += "<td data-label='가입일'>" + rs.getString("ts") + "</td>";
         str += "</tr>";
     }
     str += "</table>";
