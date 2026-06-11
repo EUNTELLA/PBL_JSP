@@ -1,11 +1,8 @@
 webui.webp
 과제.pdf
-<<<<<<< HEAD
 
 # 컴파일된 바이너리 파일 및 폴더 제외 (Git에 올리지 않음)
 build/
 *.class
 *.jar
-=======
 makeread.md
->>>>>>> d807342 (feat: .gitignore 및 README.md 업데이트)

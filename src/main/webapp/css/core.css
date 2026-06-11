@@ -1014,3 +1014,200 @@ p {
         padding: 9px 12px;
     }
 }
+
+/* =========================================
+   인스타그램 스타일 피드 레이아웃 (카드형)
+========================================= */
+.instagram-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+.feed-list-wrap {
+    flex: 1;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.insta-feed-card {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.insta-card-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+}
+
+.insta-profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #efefef;
+    background-color: #fafafa;
+}
+
+.insta-author-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.insta-author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #262626;
+}
+
+.insta-feed-time {
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.btn-follow {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-follow.following {
+    background-color: #efefef;
+    color: #262626;
+}
+
+.insta-feed-image {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+}
+
+.insta-card-actions {
+    padding: 12px 16px 8px;
+    display: flex;
+    gap: 16px;
+}
+
+.insta-card-content {
+    padding: 0 16px 16px;
+}
+
+.insta-feed-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    color: #262626;
+    text-decoration: none;
+}
+
+.insta-sidebar {
+    width: 320px;
+    display: none;
+}
+
+/* =========================================
+   인스타그램 우측 사이드바 디자인
+========================================= */
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.sidebar-pic {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #efefef;
+    background-color: #fafafa;
+}
+
+.sidebar-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-id {
+    font-weight: 600;
+    font-size: 14px;
+    color: #262626;
+}
+
+.sidebar-desc {
+    font-size: 14px;
+    color: #8e8e8e;
+}
+
+.sidebar-action {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0095f6;
+    text-decoration: none;
+}
+
+.sidebar-suggestions {
+    margin-bottom: 24px;
+}
+
+.sugg-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.sugg-header span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8e8e8e;
+}
+
+.sugg-header a {
+    font-size: 12px;
+    font-weight: 600;
+    color: #262626;
+    text-decoration: none;
+}
+
+.sugg-item {
+    font-size: 13px;
+    color: #8e8e8e;
+    line-height: 1.5;
+    padding: 14px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #efefef;
+}
+
+.sidebar-footer {
+    font-size: 12px;
+    color: #c7c7c7;
+    line-height: 1.8;
+}
+
+.sidebar-footer a {
+    color: #c7c7c7;
+    text-decoration: none;
+}
+
+@media (min-width: 900px) {
+    .insta-sidebar { display: block; }
+}

@@ -67,13 +67,6 @@
                 <a class="text-button" href="main.jsp">전체</a>
                 <% } %>
             </form>
-            <div class="board-list">
-                <div class="board-row board-head">
-                    <div class="board-no">번호</div>
-                    <div class="board-title">제목</div>
-                    <div class="board-author">작성자</div>
-                    <div class="board-date">작성일</div>
-                </div>
 <%
     FeedDAO feedDao = new FeedDAO();
     int totalCount = feedDao.getCount(keyword);
@@ -81,10 +74,15 @@
     if (totalPage < 1) totalPage = 1;
     if (pageNo > totalPage) pageNo = totalPage;
     ArrayList<FeedObj> feeds = feedDao.getPage(keyword, pageNo, pageSize);
+%>
+            <div class="instagram-container">
+                <div class="feed-list-wrap">
+<%
     if (feeds == null || feeds.isEmpty()) {
-        out.print("<div class='board-empty'>등록된 글이 없습니다.</div>");
+        out.print("<div class='board-empty' style='text-align:center; padding: 50px; color:#8e8e8e;'>등록된 글이 없습니다.</div>");
     } else {
         LikeDAO likeDao = new LikeDAO();
+        FollowDAO followDao = new FollowDAO();
         for (FeedObj feed : feeds) {
             String detailUrl = "feedView.jsp?no=" + feed.getNo();
             if (!keyword.trim().equals("")) {
@@ -94,29 +92,112 @@
             }
             String currentUrl = "main.jsp?page=" + pageNo + "&keyword=" + java.net.URLEncoder.encode(keyword, "UTF-8");
             String likeUrl = "likeToggle.jsp?no=" + feed.getNo() + "&redirect=" + java.net.URLEncoder.encode(currentUrl, "UTF-8");
-            boolean liked = likeDao.isLiked(feed.getNo(), loginId);
-            out.print("<div class='board-item'>");
-            out.print("  <div class='board-row'>");
-            out.print("    <div class='board-no'>" + feed.getNo() + "</div>");
-            out.print("    <div class='board-title'><a class='board-title-link' href='" + detailUrl + "'>" + h(feed.getTitle()) + "</a>");
-            if (feed.getReplyCount() > 0) out.print("<span class='reply-count'>[" + feed.getReplyCount() + "]</span>");
-            out.print("<div class='feed-social'>추천 " + feed.getLikeCount());
-            if (loginId != null) out.print(" <a class='social-link' href='" + likeUrl + "'>" + (liked ? "추천 취소" : "추천") + "</a>");
-            out.print("</div>");
-            out.print("    </div>");
-            out.print("    <div class='board-author'>");
-            if (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) {
-                out.print("<img class='avatar avatar-small' src='../images/" + h(feed.getAuthorProfileImage()) + "' alt='프로필 이미지'>");
-            } else {
-                out.print("<span class='avatar avatar-small avatar-empty'>" + h((feed.getAuthorName() == null || feed.getAuthorName().equals("") ? feed.getId() : feed.getAuthorName()).substring(0, 1)) + "</span>");
+            
+            boolean liked = false;
+            boolean isFollowing = false;
+            if (loginId != null) {
+                liked = likeDao.isLiked(feed.getNo(), loginId);
+                isFollowing = followDao.isFollowing(loginId, feed.getId());
             }
-            out.print("<span>" + h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) + "</span></div>");
-            out.print("    <div class='board-date'>" + h(feed.getTs()) + "</div>");
-            out.print("  </div>");
-            out.print("</div>");
+            
+            String authorName = feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName();
+            String profileImg = (feed.getAuthorProfileImage() != null && !feed.getAuthorProfileImage().trim().equals("")) ? "../images/" + h(feed.getAuthorProfileImage()) : "../image/default_profile.png";
+%>
+                    <article class="insta-feed-card">
+                        <div class="insta-card-header">
+                            <img src="<%= profileImg %>" class="insta-profile-pic" alt="프로필">
+                            <div class="insta-author-info">
+                                <span class="insta-author-name"><%= h(authorName) %></span>
+                                <span class="insta-feed-time"><%= feed.getTs().substring(0, 16) %></span>
+                            </div>
+<% if (loginId != null && !loginId.equals(feed.getId())) { %>
+                            <button class="btn-follow <%= isFollowing ? "following" : "" %>" onclick="location.href='followToggle.jsp?targetId=<%= feed.getId() %>'">
+                                <%= isFollowing ? "언팔로우" : "팔로우" %>
+                            </button>
+<% } %>
+                        </div>
+<% if (feed.getImages() != null && !feed.getImages().trim().isEmpty()) { %>
+                        <img src="../images/<%= h(feed.getImages()) %>" class="insta-feed-image" alt="게시글 이미지">
+<% } %>
+                        <div class="insta-card-actions">
+                            <button class="btn-action" onclick="location.href='<%= likeUrl %>'">
+                                <%= liked ? "❤️" : "🤍" %> 
+                                <span class="count"><%= feed.getLikeCount() %></span>
+                            </button>
+                            <button class="btn-action" onclick="location.href='<%= detailUrl %>'">
+                                💬 <span class="count"><%= feed.getReplyCount() %></span>
+                            </button>
+                        </div>
+                        <div class="insta-card-content">
+                            <a href="<%= detailUrl %>" class="insta-feed-title"><%= h(feed.getTitle()) %></a>
+                            <p class="insta-feed-text"><%= h(feed.getContent()) %></p>
+                        </div>
+                    </article>
+<%
         }
     }
 %>
+                </div>
+                <div class="insta-sidebar">
+<%
+    if (loginId != null) {
+        String myName = loginId;
+        String myProfileImg = "../image/default_profile.png";
+        
+        java.sql.Connection conn = null;
+        java.sql.PreparedStatement stmt = null;
+        java.sql.ResultSet rs = null;
+        try {
+            conn = util.ConnectionPool.get();
+            stmt = conn.prepareStatement("SELECT name, profile_image FROM user WHERE id=?");
+            stmt.setString(1, loginId);
+            rs = stmt.executeQuery();
+            if(rs.next()) {
+                myName = rs.getString("name");
+                if(myName == null || myName.trim().isEmpty()) myName = loginId;
+                String pImg = rs.getString("profile_image");
+                if(pImg != null && !pImg.trim().isEmpty()) myProfileImg = "../images/" + pImg;
+            }
+        } catch(Exception e) { } finally {
+            if(rs!=null) rs.close(); if(stmt!=null) stmt.close(); if(conn!=null) conn.close();
+        }
+%>
+                    <div class="sidebar-profile">
+                        <img src="<%= myProfileImg %>" class="sidebar-pic" alt="내 프로필">
+                        <div class="sidebar-info">
+                            <span class="sidebar-id"><%= h(loginId) %></span>
+                            <span class="sidebar-desc"><%= h(myName) %></span>
+                        </div>
+                        <a href="logout.jsp" class="sidebar-action">로그아웃</a>
+                    </div>
+                    <div class="sidebar-suggestions">
+                        <div class="sugg-header">
+                            <span>회원님을 위한 추천</span>
+                            <a href="userList.jsp">모두 보기</a>
+                        </div>
+                        <div class="sugg-item">
+                            새로운 친구들을 팔로우하고<br>새로운 소식을 받아보세요!
+                        </div>
+                    </div>
+<%
+    } else {
+%>
+                    <div class="sidebar-profile">
+                        <div class="sidebar-info">
+                            <span class="sidebar-id">로그인이 필요합니다</span>
+                            <span class="sidebar-desc">MySNS를 100% 즐겨보세요!</span>
+                        </div>
+                        <a href="../html/login.html" class="sidebar-action">로그인</a>
+                    </div>
+<%
+    }
+%>
+                    <div class="sidebar-footer">
+                        <a href="#">소개</a> · <a href="#">도움말</a> · <a href="#">홍보 센터</a><br>
+                        <a href="#">개인정보처리방침</a> · <a href="#">약관</a><br><br>
+                        © 202X MySNS from PBL_JSP
+                    </div>
+                </div>
             </div>
             <div class="pagination">
 <%
