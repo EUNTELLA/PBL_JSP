@@ -22,6 +22,9 @@
 <% } else { %>
             <a href="html/feedAdd.html">글쓰기</a>
             <a href="jsp/edit.jsp">정보수정</a>
+            <% if ("root@abc.com".equals(uid)) { %>
+            <a href="jsp/userList.jsp">회원목록</a>
+            <% } %>
             <a href="jsp/followingList.jsp">팔로우 목록</a>
             <a href="jsp/logout.jsp">로그아웃</a>
 <% } %>
@@ -51,6 +54,12 @@
                     <strong>팔로우 목록</strong>
                     <span>내가 팔로우한 회원을 확인합니다.</span>
                 </a>
+                <% if ("root@abc.com".equals(uid)) { %>
+                <a class="home-card" href="jsp/userList.jsp">
+                    <strong>회원목록</strong>
+                    <span>관리자 계정으로 전체 회원을 확인합니다.</span>
+                </a>
+                <% } %>
 <% } %>
             </div>
         </div>
