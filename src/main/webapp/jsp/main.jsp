@@ -38,7 +38,7 @@
     <div class="page-hdr">MySNS</div>
     <div class="page-body">
         <div class="menu-bar">
-            <a href="../index.jsp">홈</a>
+            <a href="../index.html">홈</a>
             <a href="main.jsp">피드</a>
 <% if (loginId == null) { %>
             <a href="../html/login.html">로그인</a>
