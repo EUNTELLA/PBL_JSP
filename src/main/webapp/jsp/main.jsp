@@ -120,10 +120,19 @@
                         <img src="../images/<%= h(feed.getImages()) %>" class="insta-feed-image" alt="게시글 이미지">
 <% } %>
                         <div class="insta-card-actions">
-                            <button class="btn-action" onclick="location.href='<%= likeUrl %>'">
-                                <%= liked ? "❤️" : "🤍" %> 
-                                <span class="count"><%= feed.getLikeCount() %></span>
-                            </button>
+                            <div class="reaction-wrapper" onmouseleave="closeReaction(this)">
+                                <button class="btn-action" onclick="toggleReaction(this)">
+                                    <span id="current-emoji-<%= feed.getNo() %>"><%= liked ? "👍" : "➕" %></span>
+                                    <span class="count" id="like-count-<%= feed.getNo() %>"><%= feed.getLikeCount() %></span>
+                                </button>
+                                <div class="reaction-popup">
+                                    <span class="reaction-emoji" onclick="selectReaction(<%= feed.getNo() %>, '👍', '<%= likeUrl %>')">👍</span>
+                                    <span class="reaction-emoji" onclick="selectReaction(<%= feed.getNo() %>, '❤️', '<%= likeUrl %>')">❤️</span>
+                                    <span class="reaction-emoji" onclick="selectReaction(<%= feed.getNo() %>, '😂', '<%= likeUrl %>')">😂</span>
+                                    <span class="reaction-emoji" onclick="selectReaction(<%= feed.getNo() %>, '😮', '<%= likeUrl %>')">😮</span>
+                                    <span class="reaction-emoji" onclick="selectReaction(<%= feed.getNo() %>, '😢', '<%= likeUrl %>')">😢</span>
+                                </div>
+                            </div>
                             <button class="btn-action" onclick="location.href='<%= detailUrl %>'">
                                 💬 <span class="count"><%= feed.getReplyCount() %></span>
                             </button>
@@ -211,5 +220,34 @@
         </div>
     </div>
     <div class="page-footer">Copyright: mysns.com, 202x</div>
+
+<script>
+function toggleReaction(btn) {
+    const wrapper = btn.closest('.reaction-wrapper');
+    // 다른 열려있는 팝업 닫기
+    document.querySelectorAll('.reaction-wrapper.active').forEach(el => {
+        if(el !== wrapper) el.classList.remove('active');
+    });
+    wrapper.classList.toggle('active');
+}
+
+function closeReaction(wrapper) {
+    wrapper.classList.remove('active');
+}
+
+function selectReaction(feedNo, emoji, url) {
+    const emojiSpan = document.getElementById('current-emoji-' + feedNo);
+    
+    // 1. 선택한 이모티콘으로 즉시 화면 변경
+    emojiSpan.innerText = emoji;
+    
+    // 2. 팝업 닫기
+    const wrapper = emojiSpan.closest('.reaction-wrapper');
+    wrapper.classList.remove('active');
+
+    // 3. 백그라운드(비동기)로 좋아요 처리 (화면 새로고침 방지)
+    fetch(url).catch(err => console.error(err));
+}
+</script>
 </body>
 </html>
