@@ -73,7 +73,6 @@
                     <div class="board-title">제목</div>
                     <div class="board-author">작성자</div>
                     <div class="board-date">작성일</div>
-                    <div class="board-manage">관리</div>
                 </div>
 <%
     FeedDAO feedDao = new FeedDAO();
@@ -113,12 +112,6 @@
             }
             out.print("<span>" + h(feed.getAuthorName() == null ? feed.getId() : feed.getAuthorName()) + "</span><small>" + h(feed.getId()) + "</small></div>");
             out.print("    <div class='board-date'>" + h(feed.getTs()) + "</div>");
-            out.print("    <div class='board-manage'>");
-            if (loginId != null && loginId.equals(feed.getId())) {
-                out.print("      <a class='text-button' href='feedEdit.jsp?no=" + feed.getNo() + "'>수정</a>");
-                out.print("      <a class='text-button danger' href='feedDelete.jsp?no=" + feed.getNo() + "' onclick=\"return confirm('삭제하시겠습니까?');\">삭제</a>");
-            }
-            out.print("    </div>");
             out.print("  </div>");
             out.print("</div>");
         }
