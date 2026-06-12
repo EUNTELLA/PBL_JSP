@@ -1,7 +1,7 @@
 USE mysns;
 
 INSERT INTO user(id, password, name, bio, profile_image)
-VALUES("root@abc.com", "111", "관리자", "회원 목록을 관리합니다.", "profile1.jpg")
+VALUES("root@abc.com", "111", "관리자", "회원 목록을 관리합니다.", "rootprofile.jpg")
 ON DUPLICATE KEY UPDATE name = VALUES(name), bio = VALUES(bio), profile_image = VALUES(profile_image);
 
 INSERT INTO user(id, password, name, bio, profile_image)
