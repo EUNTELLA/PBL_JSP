@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%
     session.invalidate();
     String str = "<!DOCTYPE html><html><head>";
@@ -17,7 +17,7 @@
     str += "</div>";
     str += "<div class='section'><h2>로그아웃</h2><p>로그아웃 하였습니다.</p></div>";
     str += "</div>";
-    str += "<div class='page-footer'>Copyright: mysns.com, 202x</div>";
+    str += "<div class='page-footer'>Copyright: mysns.com, 2026</div>";
     str += "</body></html>";
    	out.print(str);
 %>

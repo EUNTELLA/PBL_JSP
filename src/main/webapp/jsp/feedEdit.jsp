@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="dao.*" %>
 <%!
     private String h(String value) {
@@ -62,7 +62,7 @@
             <input type="submit" class="mtop-30" value="수정하기">
         </div>
     </div>
-    <div class="page-footer">Copyright: mysns.com, 202x</div>
+    <div class="page-footer">Copyright: mysns.com, 2026</div>
 </form>
 </body>
 </html>

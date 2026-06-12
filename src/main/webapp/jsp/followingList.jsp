@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="dao.*" %>
 <%!
@@ -72,6 +72,6 @@
             <% } %>
         </div>
     </div>
-    <div class="page-footer">Copyright: mysns.com, 202x</div>
+    <div class="page-footer">Copyright: mysns.com, 2026</div>
 </body>
 </html>

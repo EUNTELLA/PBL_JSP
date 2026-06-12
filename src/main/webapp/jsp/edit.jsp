@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%@ page import="dao.*" %>
 <%!
     private String h(String value) {
@@ -90,7 +90,7 @@
             <a class="button danger-button" href="withdraw.jsp" onclick="return confirm('정말 회원탈퇴 하시겠습니까?');">회원탈퇴하기</a>
         </div>
     </div>
-    <div class="page-footer">© 202x MySNS from GCA</div>
+    <div class="page-footer">© 2026 MySNS from GCA</div>
 </form>
 </body>
 </html>

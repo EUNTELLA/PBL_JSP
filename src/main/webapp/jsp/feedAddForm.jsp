@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%
     String uid = (String) session.getAttribute("id");
     if (uid == null) {
@@ -40,7 +40,7 @@
             <input type="submit" class="mtop-30" value="업로드하기">
         </div>
     </div>
-    <div class="page-footer">Copyright: mysns.com, 202x</div>
+    <div class="page-footer">Copyright: mysns.com, 2026</div>
 </form>
 </body>
 </html>

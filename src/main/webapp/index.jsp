@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="utf-8" %>
+﻿<%@ page contentType="text/html" pageEncoding="utf-8" %>
 <%
     String uid = (String) session.getAttribute("id");
 %>
@@ -64,6 +64,6 @@
             </div>
         </div>
     </div>
-    <div class="page-footer">Copyright: mysns.com, 202x</div>
+    <div class="page-footer">Copyright: mysns.com, 2026</div>
 </body>
 </html>
