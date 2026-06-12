@@ -1531,11 +1531,11 @@ p {
 }
 
 .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.35rem;
     font-weight: 800;
     color: #202035;
     margin-bottom: 20px;
-    letter-spacing: -1px;
+    letter-spacing: 0;
     line-height: 1.25;
 }
 
@@ -1582,4 +1582,53 @@ p {
 .hero-btn-secondary:hover {
     background-color: #fafafa;
     transform: translateY(-2px);
+}
+
+@media (max-width: 760px) {
+    .menu-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        white-space: normal;
+        overflow-x: visible;
+    }
+
+    .menu-bar a {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 7px 9px;
+    }
+
+    .hero-section {
+        min-height: auto;
+        padding: 42px 22px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+        box-shadow: 0 8px 22px rgba(48, 54, 93, 0.06);
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        line-height: 1.28;
+        margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+        font-size: 0.98rem;
+        line-height: 1.65;
+        margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero-btn {
+        width: 100%;
+        padding: 13px 16px;
+        font-size: 1rem;
+        text-align: center;
+    }
 }

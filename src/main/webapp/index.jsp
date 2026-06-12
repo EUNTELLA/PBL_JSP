@@ -29,6 +29,14 @@
             <a href="jsp/logout.jsp">로그아웃</a>
 <% } %>
         </div>
+        <div class="hero-section">
+            <h1 class="hero-title">당신의 특별한 일상을<br>공유하세요</h1>
+            <p class="hero-subtitle">MySNS에서 친구들과 소통하고, 새로운 사람들을 만나보세요.<br>지금 가입하고 당신만의 이야기를 기록해 보세요.</p>
+            <div class="hero-buttons">
+                <a href="jsp/main.jsp" class="hero-btn hero-btn-primary">피드 둘러보기</a>
+                <a href="<%= uid == null ? "html/login.html" : "jsp/feedAddForm.jsp" %>" class="hero-btn hero-btn-secondary"><%= uid == null ? "로그인 / 가입" : "새 글 작성" %></a>
+            </div>
+        </div>
         <div class="section">
             <h2>My Workflows</h2>
             <div class="home-grid">
