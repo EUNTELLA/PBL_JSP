@@ -126,6 +126,12 @@ java:comp/env/jdbc/mysns
 
 ### 실행
 
+Windows에서는 프로젝트 폴더에서 아래 명령어 한 번으로 Java 클래스 컴파일과 Tomcat 실행을 함께 진행할 수 있습니다.
+
+```bat
+run.bat
+```
+
 Tomcat에 프로젝트를 배포한 뒤 브라우저에서 접속합니다.
 
 ```text
