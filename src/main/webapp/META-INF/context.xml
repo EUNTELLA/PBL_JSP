@@ -6,7 +6,7 @@ type="javax.sql.DataSource"
 driverClassName="com.mysql.cj.jdbc.Driver"
 url="jdbc:mysql://localhost:3306/mysns?serverTimezone=Asia/Seoul&amp;characterEncoding=UTF-8"
 username="root"
-password="비밀번호"
+password="1234"
 maxTotal="16"
 maxIdle="4"
 maxWaitMillis="-1" />
